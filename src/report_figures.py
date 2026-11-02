@@ -8,10 +8,12 @@ import numpy as np
 import pandas as pd
 from matplotlib.colors import ListedColormap
 
-from biogas_model import ACTIONS, PRIOR, STATES, UTILITY, bayes_posterior
+from .biogas_model import ACTIONS, PRIOR, STATES, UTILITY, bayes_posterior
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
+TABLES = RESULTS / "tables"
+REPORT_FIGURES = RESULTS / "report_figures"
 SCENARIO_TITLES = {
     "A": "Scenario A - Stable operation",
     "B": "Scenario B - Deteriorating operation",
@@ -31,7 +33,7 @@ def to_xy(beliefs):
 
 def load(task, key):
     name = "task2_hmm" if task == 2 else "task3_decisions"
-    return pd.read_csv(RESULTS / f"{name}_scenario_{key}.csv")
+    return pd.read_csv(TABLES / f"{name}_scenario_{key}.csv")
 
 
 def fig_task1_evidence():
@@ -52,7 +54,7 @@ def fig_task1_evidence():
     axes[0].set_ylabel("Probability")
     fig.suptitle("Task 1: Effect of combining Sensor 1 and pH evidence", fontsize=12)
     fig.tight_layout()
-    fig.savefig(RESULTS / "fig_task1_evidence_combination.png", dpi=200)
+    fig.savefig(REPORT_FIGURES / "fig_task1_evidence_combination.png", dpi=200)
     plt.close(fig)
 
 
@@ -79,7 +81,7 @@ def fig_task2_comparison():
     fig.legend(handles, labels, loc="lower center", ncol=6, fontsize=8, bbox_to_anchor=(0.5, 0))
     fig.suptitle("Task 2: HMM filtered belief P(X$_t$ | e$_{1:t}$) across scenarios", fontsize=12)
     fig.tight_layout(rect=(0, 0.04, 1, 1))
-    fig.savefig(RESULTS / "fig_task2_scenario_comparison.png", dpi=200)
+    fig.savefig(REPORT_FIGURES / "fig_task2_scenario_comparison.png", dpi=200)
     plt.close(fig)
 
 
@@ -107,7 +109,7 @@ def fig_task3_action_timeline():
     fig.legend(handles, ACTION_COLOURS.keys(), loc="upper right", ncol=3, fontsize=8)
     fig.suptitle("Task 3: Recommended action over time", fontsize=12, x=0.3)
     fig.tight_layout()
-    fig.savefig(RESULTS / "fig_task3_action_timeline.png", dpi=200)
+    fig.savefig(REPORT_FIGURES / "fig_task3_action_timeline.png", dpi=200)
     plt.close(fig)
 
 
@@ -157,7 +159,7 @@ def fig_task3_decision_regions():
     ax.axis("off")
     ax.set_title("Task 3: Optimal action regions over the belief simplex", fontsize=12, pad=30)
     fig.tight_layout()
-    fig.savefig(RESULTS / "fig_task3_decision_regions.png", dpi=200)
+    fig.savefig(REPORT_FIGURES / "fig_task3_decision_regions.png", dpi=200)
     plt.close(fig)
 
 
@@ -169,4 +171,5 @@ def make_all():
 
 
 if __name__ == "__main__":
+    REPORT_FIGURES.mkdir(parents=True, exist_ok=True)
     make_all()
