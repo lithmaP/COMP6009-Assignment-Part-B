@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+import report_figures
 from biogas_model import (
     ACTIONS, OBS_S1, PRIOR, SENSOR1, STATES, TRANSITION, UTILITY,
     bayes_posterior, hmm_filter, recommend_action,
@@ -210,6 +211,7 @@ def main():
     task1()
     hmm_results = task2()
     task3(hmm_results)
+    report_figures.make_all()
     print(f"\nAll outputs written to {RESULTS}")
 
 
