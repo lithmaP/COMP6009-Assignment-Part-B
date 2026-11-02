@@ -27,7 +27,8 @@ numpy (no HMM or probabilistic-inference libraries).
 
 ## Setup and running
 
-Requires Python 3.9+.
+Requires Python 3.11+ (tested with Python 3.13). Package versions are pinned in `requirements.txt`
+so the figures are reproduced exactly.
 
 ```bash
 python3 -m venv .venv
