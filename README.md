@@ -7,9 +7,10 @@ numpy (no HMM or probabilistic-inference libraries).
 ## Files
 
 | File | Contents |
-|------|----------|
+| --- | --- |
 | `biogas_model.py` | Model tables (prior, sensor models, transition, utility) and the algorithms: `bayes_posterior`, `hmm_filter`, `recommend_action` |
 | `main.py` | Runs Tasks 1–3, prints results and writes all tables/plots to `results/` |
+| `report_figures.py` | Combined figures used in the report (called by `main.py`) |
 | `scenario_*.csv` | Supplied Sensor 1 observation sequences (30 steps each) |
 | `results/` | Generated outputs (see below) |
 
@@ -27,10 +28,19 @@ python main.py
 ## Outputs (`results/`)
 
 | Task | Files |
-|------|-------|
+| --- | --- |
 | 1 — Bayesian inference | `task1_bayes_posteriors.csv` (unnormalised values, P(evidence), posterior for each case), `task1_posteriors.png` |
 | 2 — HMM filtering | `task2_hmm_scenario_{A,B,C}.csv` (predicted, unnormalised and filtered belief + most probable state per step), `task2_hmm_scenario_{A,B,C}.png` |
 | 3 — Expected utility | `task3_decisions_scenario_{A,B,C}.csv` (EU of each action, recommended action, action for most probable state), `task3_decisions_scenario_{A,B,C}.png`, `task3_summary.csv` |
+
+### Report figures
+
+| Figure | Report section |
+| --- | --- |
+| `fig_task1_evidence_combination.png` | 2: prior → Warning → Warning + Abnormal pH |
+| `fig_task2_scenario_comparison.png` | 3: filtered belief for all three scenarios |
+| `fig_task3_action_timeline.png` | 4: max-EU action vs most-probable-state action over time |
+| `fig_task3_decision_regions.png` | 4: optimal-action regions on the belief simplex, with the HMM beliefs overlaid |
 
 ## Method summary
 
