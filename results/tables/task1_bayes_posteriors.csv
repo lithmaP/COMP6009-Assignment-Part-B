@@ -1,0 +1,5 @@
+evidence,P(evidence),unnorm_Stable,unnorm_Stressed,unnorm_Critical,P(Stable),P(Stressed),P(Critical),most_probable
+S1=Normal,0.615000,0.560000,0.050000,0.005000,0.910569,0.081301,0.008130,Stable
+S1=Warning,0.250000,0.105000,0.120000,0.025000,0.420000,0.480000,0.100000,Stressed
+S1=Alarm,0.135000,0.035000,0.030000,0.070000,0.259259,0.222222,0.518519,Critical
+"S1=Warning, S2=Abnormal pH",0.091750,0.010500,0.060000,0.021250,0.114441,0.653951,0.231608,Stressed
