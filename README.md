@@ -1,4 +1,4 @@
-# COMP6009 Assignment Part B — Biogas Plant Intelligent Monitoring and Decision System
+# COMP6009 Assignment Part B - Biogas Plant Intelligent Monitoring and Decision System
 
 Bayesian inference, HMM filtering and expected-utility decision making for an anaerobic digester
 with hidden state X ∈ {Stable, Stressed, Critical}. All algorithms are implemented directly with
