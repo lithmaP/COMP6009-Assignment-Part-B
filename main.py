@@ -8,8 +8,9 @@ import numpy as np
 import pandas as pd
 
 from src import report_figures
+from src.sensitivity import sensitivity_analysis
 from src.biogas_model import (
-    ACTIONS, OBS_S1, PRIOR, SENSOR1, STATES, TRANSITION, UTILITY,
+    ACTIONS, OBS_S1, OBS_S2, PRIOR, SENSOR1, STATES, TRANSITION, UTILITY,
     bayes_posterior, hmm_filter, recommend_action,
 )
 
@@ -41,6 +42,7 @@ def task1():
     print("TASK 1 - Bayesian inference")
     print("=" * 70)
     cases = [("S1=" + o, {"S1": o}) for o in OBS_S1]
+    cases += [("S2=" + o, {"S2": o}) for o in OBS_S2]
     cases.append(("S1=Warning, S2=Abnormal pH", {"S1": "Warning", "S2": "Abnormal pH"}))
 
     rows = []
@@ -68,8 +70,8 @@ def task1():
     df.to_csv(TABLES / "task1_bayes_posteriors.csv", index=False, float_format="%.6f")
 
     # Bar chart comparing posteriors
-    fig, ax = plt.subplots(figsize=(9, 4.5))
-    labels = ["Prior"] + [r["evidence"].replace("S1=", "").replace(", S2=", " +\n") for r in rows]
+    fig, ax = plt.subplots(figsize=(11, 4.5))
+    labels = ["Prior"] + [r["evidence"].replace(", ", " +\n") for r in rows]
     data = np.vstack([PRIOR] + [[r[f"P({s})"] for s in STATES] for r in rows])
     x = np.arange(len(labels))
     width = 0.26
@@ -209,12 +211,28 @@ def task3(hmm_results):
     print("\nSummary:\n" + pd.DataFrame(summary).to_string(index=False))
 
 
+# ---------------------------------------------------------------- Sensitivity analysis
+def sensitivity():
+    print("\n" + "=" * 70)
+    print("SENSITIVITY - effect of modelling assumptions on the recommended actions")
+    print("=" * 70)
+    observations = {key: pd.read_csv(DATA / fname)["observation"].tolist()
+                    for key, (_, fname) in SCENARIOS.items()}
+    df = sensitivity_analysis(observations)
+    df.to_csv(TABLES / "sensitivity_analysis.csv", index=False, float_format="%.4f")
+    for analysis, part in df.groupby("analysis", sort=False):
+        print(f"\n{part['parameter'].iloc[0]}")
+        print(part.drop(columns=["analysis", "parameter"])
+              .to_string(index=False, float_format=lambda v: f"{v:.3f}"))
+
+
 def main():
     for d in (TABLES, FIGURES, report_figures.REPORT_FIGURES):
         d.mkdir(parents=True, exist_ok=True)
     task1()
     hmm_results = task2()
     task3(hmm_results)
+    sensitivity()
     report_figures.make_all()
     print(f"\nAll outputs written to {RESULTS}")
 

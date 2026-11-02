@@ -163,11 +163,47 @@ def fig_task3_decision_regions():
     plt.close(fig)
 
 
+def fig_sensitivity():
+    """How far the recommended actions move when one modelling assumption is changed."""
+    df = pd.read_csv(TABLES / "sensitivity_analysis.csv")
+    analyses = [("utility", "U(Continue, Critical)", -20),
+                ("sensor_noise", "Sensor 1 noise $\\varepsilon$", 0.0),
+                ("transition", "Transition persistence $\\lambda$", 0.0)]
+    metrics = [("n_differs_from_baseline", "Steps with a different\naction from baseline"),
+               ("n_switches", "Number of action\nswitches over 30 steps")]
+    markers = {"A": "o", "B": "s", "C": "^"}
+    fig, axes = plt.subplots(2, 3, figsize=(11, 5.6), sharey="row")
+    for col, (analysis, xlabel, baseline) in enumerate(analyses):
+        part = df[df["analysis"] == analysis]
+        for row, (metric, ylabel) in enumerate(metrics):
+            ax = axes[row, col]
+            for key in SCENARIO_TITLES:
+                sel = part[part["scenario"] == key]
+                ax.plot(sel["value"], sel[metric], marker=markers[key], label=f"Scenario {key}")
+            ax.axvline(baseline, color="grey", ls="--", lw=1)
+            ax.grid(alpha=0.3)
+            if col == 0:
+                ax.set_ylabel(ylabel, fontsize=9)
+            if row == 1:
+                ax.set_xlabel(xlabel)
+        axes[0, col].set_title(["Utility model", "Sensor 1 reliability", "Transition model"][col],
+                               fontsize=10)
+    handles, labels = axes[0, 0].get_legend_handles_labels()
+    handles.append(plt.Line2D([], [], color="grey", ls="--"))
+    labels.append("Baseline model")
+    fig.legend(handles, labels, loc="lower center", ncol=4, fontsize=8, bbox_to_anchor=(0.5, 0))
+    fig.suptitle("Sensitivity of recommended actions to modelling assumptions", fontsize=12)
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
+    fig.savefig(REPORT_FIGURES / "fig_sensitivity.png", dpi=200)
+    plt.close(fig)
+
+
 def make_all():
     fig_task1_evidence()
     fig_task2_comparison()
     fig_task3_action_timeline()
     fig_task3_decision_regions()
+    fig_sensitivity()
 
 
 if __name__ == "__main__":
