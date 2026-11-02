@@ -7,14 +7,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import report_figures
-from biogas_model import (
+from src import report_figures
+from src.biogas_model import (
     ACTIONS, OBS_S1, PRIOR, SENSOR1, STATES, TRANSITION, UTILITY,
     bayes_posterior, hmm_filter, recommend_action,
 )
 
 ROOT = Path(__file__).parent
+DATA = ROOT / "data"
 RESULTS = ROOT / "results"
+TABLES = RESULTS / "tables"
+FIGURES = RESULTS / "figures"
 SCENARIOS = {
     "A": ("Scenario A - Stable operation", "scenario_A_stable.csv"),
     "B": ("Scenario B - Deteriorating operation", "scenario_B_deteriorating.csv"),
@@ -62,7 +65,7 @@ def task1():
           f"{np.allclose(manual_post, code_post)}")
 
     df = pd.DataFrame(rows)
-    df.to_csv(RESULTS / "task1_bayes_posteriors.csv", index=False, float_format="%.6f")
+    df.to_csv(TABLES / "task1_bayes_posteriors.csv", index=False, float_format="%.6f")
 
     # Bar chart comparing posteriors
     fig, ax = plt.subplots(figsize=(9, 4.5))
@@ -79,7 +82,7 @@ def task1():
     ax.set_title("Task 1: Prior vs posterior belief over digester state")
     ax.legend(title="State")
     fig.tight_layout()
-    fig.savefig(RESULTS / "task1_posteriors.png", dpi=200)
+    fig.savefig(FIGURES / "task1_posteriors.png", dpi=200)
     plt.close(fig)
     return df
 
@@ -113,7 +116,7 @@ def task2():
     print("=" * 70)
     results = {}
     for key, (title, fname) in SCENARIOS.items():
-        obs = pd.read_csv(ROOT / fname)
+        obs = pd.read_csv(DATA / fname)
         steps = hmm_filter(PRIOR, TRANSITION, SENSOR1, obs["observation"].tolist())
 
         rows = []
@@ -127,8 +130,8 @@ def task2():
         df = pd.DataFrame(rows)
         assert np.allclose(df[[f"P({s})" for s in STATES]].sum(axis=1), 1.0)
 
-        df.to_csv(RESULTS / f"task2_hmm_scenario_{key}.csv", index=False, float_format="%.6f")
-        plot_beliefs(df, title, RESULTS / f"task2_hmm_scenario_{key}.png")
+        df.to_csv(TABLES / f"task2_hmm_scenario_{key}.csv", index=False, float_format="%.6f")
+        plot_beliefs(df, title, FIGURES / f"task2_hmm_scenario_{key}.png")
         results[key] = df
 
         print(f"\n{title}")
@@ -187,8 +190,8 @@ def task3(hmm_results):
         out = pd.DataFrame(rows)
         out["action_changed"] = out["recommended_action"].ne(out["recommended_action"].shift())
         out.loc[0, "action_changed"] = False
-        out.to_csv(RESULTS / f"task3_decisions_scenario_{key}.csv", index=False, float_format="%.6f")
-        plot_decisions(out, title, RESULTS / f"task3_decisions_scenario_{key}.png")
+        out.to_csv(TABLES / f"task3_decisions_scenario_{key}.csv", index=False, float_format="%.6f")
+        plot_decisions(out, title, FIGURES / f"task3_decisions_scenario_{key}.png")
 
         print(f"\n{title}")
         print(out[["time", "observation"] + [f"EU({a})" for a in ACTIONS]
@@ -202,12 +205,13 @@ def task3(hmm_results):
         summary.append({"scenario": key, **{a: int(counts.get(a, 0)) for a in ACTIONS},
                         "n_switches": int(out["action_changed"].sum()),
                         "n_differs_from_most_probable": int(out["differs"].sum())})
-    pd.DataFrame(summary).to_csv(RESULTS / "task3_summary.csv", index=False)
+    pd.DataFrame(summary).to_csv(TABLES / "task3_summary.csv", index=False)
     print("\nSummary:\n" + pd.DataFrame(summary).to_string(index=False))
 
 
 def main():
-    RESULTS.mkdir(exist_ok=True)
+    for d in (TABLES, FIGURES, report_figures.REPORT_FIGURES):
+        d.mkdir(parents=True, exist_ok=True)
     task1()
     hmm_results = task2()
     task3(hmm_results)
