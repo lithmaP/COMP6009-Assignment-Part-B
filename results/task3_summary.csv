@@ -1,0 +1,4 @@
+scenario,Continue,Reduce Feed,Intervene,n_switches,n_differs_from_most_probable
+A,26,4,0,8,1
+B,11,11,8,13,4
+C,14,10,6,20,2
