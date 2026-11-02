@@ -9,7 +9,7 @@ import pandas as pd
 
 from src import report_figures
 from src.biogas_model import (
-    ACTIONS, OBS_S1, PRIOR, SENSOR1, STATES, TRANSITION, UTILITY,
+    ACTIONS, OBS_S1, OBS_S2, PRIOR, SENSOR1, STATES, TRANSITION, UTILITY,
     bayes_posterior, hmm_filter, recommend_action,
 )
 
@@ -41,6 +41,7 @@ def task1():
     print("TASK 1 - Bayesian inference")
     print("=" * 70)
     cases = [("S1=" + o, {"S1": o}) for o in OBS_S1]
+    cases += [("S2=" + o, {"S2": o}) for o in OBS_S2]
     cases.append(("S1=Warning, S2=Abnormal pH", {"S1": "Warning", "S2": "Abnormal pH"}))
 
     rows = []
@@ -68,8 +69,8 @@ def task1():
     df.to_csv(TABLES / "task1_bayes_posteriors.csv", index=False, float_format="%.6f")
 
     # Bar chart comparing posteriors
-    fig, ax = plt.subplots(figsize=(9, 4.5))
-    labels = ["Prior"] + [r["evidence"].replace("S1=", "").replace(", S2=", " +\n") for r in rows]
+    fig, ax = plt.subplots(figsize=(11, 4.5))
+    labels = ["Prior"] + [r["evidence"].replace(", ", " +\n") for r in rows]
     data = np.vstack([PRIOR] + [[r[f"P({s})"] for s in STATES] for r in rows])
     x = np.arange(len(labels))
     width = 0.26
