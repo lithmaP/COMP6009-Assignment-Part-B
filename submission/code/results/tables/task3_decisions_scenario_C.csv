@@ -1,0 +1,31 @@
+time,observation,P(Stable),P(Stressed),P(Critical),EU(Continue),EU(Reduce Feed),EU(Intervene),recommended_action,most_probable_state,action_for_most_probable_state,differs,action_changed
+1,Normal,0.910569,0.081301,0.008130,9.105691,5.000000,-3.333333,Continue,Stable,Continue,False,False
+2,Normal,0.915157,0.082118,0.002725,9.261308,5.054870,-3.392473,Continue,Stable,Continue,False,False
+3,Normal,0.915865,0.081672,0.002463,9.272730,5.057042,-3.398737,Continue,Stable,Continue,False,False
+4,Warning,0.452327,0.515476,0.032197,4.910289,5.193509,-0.005306,Reduce Feed,Stressed,Reduce Feed,False,True
+5,Alarm,0.154070,0.375861,0.470070,-7.108974,0.675165,4.271861,Intervene,Critical,Intervene,False,True
+6,Warning,0.099221,0.650035,0.250744,-2.722611,3.142590,3.559176,Intervene,Stressed,Reduce Feed,True,False
+7,Normal,0.603187,0.357921,0.038892,5.969869,4.968999,-1.027849,Continue,Stable,Continue,False,True
+8,Normal,0.838715,0.152971,0.008314,8.526821,5.069834,-2.829439,Continue,Stable,Continue,False,False
+9,Warning,0.401871,0.555539,0.042590,4.277982,5.129638,0.399856,Reduce Feed,Stressed,Reduce Feed,False,True
+10,Normal,0.769936,0.217677,0.012387,7.886986,5.093812,-2.327620,Continue,Stable,Continue,False,True
+11,Warning,0.361497,0.588128,0.050375,3.783731,5.084378,0.721392,Reduce Feed,Stressed,Reduce Feed,False,True
+12,Normal,0.753745,0.232491,0.013764,7.727148,5.094848,-2.207395,Continue,Stable,Continue,False,True
+13,Warning,0.352558,0.595151,0.052291,3.670059,5.072239,0.793549,Reduce Feed,Stressed,Reduce Feed,False,True
+14,Normal,0.750018,0.235889,0.014093,7.690100,5.094960,-2.179662,Continue,Stable,Continue,False,True
+15,Warning,0.350529,0.596740,0.052732,3.644136,5.069424,0.809957,Reduce Feed,Stressed,Reduce Feed,False,True
+16,Normal,0.749164,0.236667,0.014169,7.681607,5.094982,-2.173308,Continue,Stable,Continue,False,True
+17,Alarm,0.281928,0.360661,0.357411,-3.607611,1.786554,2.813557,Intervene,Stressed,Reduce Feed,True,True
+18,Normal,0.711525,0.249540,0.038935,6.835639,4.860193,-1.786004,Continue,Stable,Continue,False,True
+19,Normal,0.869279,0.124121,0.006600,8.809022,5.058116,-3.051950,Continue,Stable,Continue,False,False
+20,Normal,0.906112,0.090748,0.003140,9.179820,5.059351,-3.327084,Continue,Stable,Continue,False,False
+21,Warning,0.445613,0.520840,0.033547,4.826858,5.185366,0.048449,Reduce Feed,Stressed,Reduce Feed,False,True
+22,Warning,0.214116,0.706351,0.079533,1.963203,4.911020,1.898851,Reduce Feed,Stressed,Reduce Feed,False,False
+23,Alarm,0.086292,0.357725,0.555983,-9.541302,-0.202110,5.175875,Intervene,Critical,Intervene,False,True
+24,Alarm,0.025827,0.165126,0.809047,-15.592415,-2.925342,6.864445,Intervene,Critical,Intervene,False,False
+25,Alarm,0.011560,0.117330,0.871110,-17.071945,-3.593771,7.274633,Intervene,Critical,Intervene,False,False
+26,Normal,0.368396,0.467880,0.163725,1.345224,3.830633,1.239853,Reduce Feed,Stressed,Reduce Feed,False,True
+27,Normal,0.756296,0.222993,0.020711,7.594724,5.015882,-2.190517,Continue,Stable,Continue,False,True
+28,Warning,0.353955,0.590747,0.055298,3.615091,5.037768,0.798801,Reduce Feed,Stressed,Reduce Feed,False,True
+29,Normal,0.750587,0.235172,0.014241,7.691391,5.092760,-2.182904,Continue,Stable,Continue,False,True
+30,Warning,0.350838,0.596407,0.052755,3.646081,5.068852,0.807913,Reduce Feed,Stressed,Reduce Feed,False,True
