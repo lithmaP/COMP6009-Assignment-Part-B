@@ -174,7 +174,7 @@ def task3(hmm_results):
     print("\n" + "=" * 70)
     print("TASK 3 - Expected-utility decisions")
     print("=" * 70)
-    summary = []
+    summary, combined = [], []
     for key, df in hmm_results.items():
         title = SCENARIOS[key][0]
         rows = []
@@ -193,6 +193,7 @@ def task3(hmm_results):
         out["action_changed"] = out["recommended_action"].ne(out["recommended_action"].shift())
         out.loc[0, "action_changed"] = False
         out.to_csv(TABLES / f"task3_decisions_scenario_{key}.csv", index=False, float_format="%.6f")
+        combined.append(out.assign(scenario=key))
         plot_decisions(out, title, FIGURES / f"task3_decisions_scenario_{key}.png")
 
         print(f"\n{title}")
@@ -208,6 +209,14 @@ def task3(hmm_results):
                         "n_switches": int(out["action_changed"].sum()),
                         "n_differs_from_most_probable": int(out["differs"].sum())})
     pd.DataFrame(summary).to_csv(TABLES / "task3_summary.csv", index=False)
+
+    # One file with every time step of every scenario (90 rows) for the report appendix
+    columns = (["scenario", "time", "observation"] + [f"P({s})" for s in STATES]
+               + ["most_probable_state"] + [f"EU({a})" for a in ACTIONS] + ["recommended_action"])
+    all_steps = pd.concat(combined, ignore_index=True)[columns]
+    assert np.allclose(all_steps[[f"P({s})" for s in STATES]].sum(axis=1), 1.0)
+    all_steps.to_csv(TABLES / "all_scenarios_beliefs_and_decisions.csv", index=False,
+                     float_format="%.6f")
     print("\nSummary:\n" + pd.DataFrame(summary).to_string(index=False))
 
 
