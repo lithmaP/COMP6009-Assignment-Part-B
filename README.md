@@ -44,6 +44,7 @@ python main.py
 | 1 — Bayesian inference | `task1_bayes_posteriors.csv` (unnormalised values, P(evidence), posterior for each Sensor 1 reading, each pH reading alone, and Warning + Abnormal pH), `task1_posteriors.png` |
 | 2 — HMM filtering | `task2_hmm_scenario_{A,B,C}.csv` (predicted, unnormalised and filtered belief + most probable state per step), `task2_hmm_scenario_{A,B,C}.png` |
 | 3 — Expected utility | `task3_decisions_scenario_{A,B,C}.csv` (EU of each action, recommended action, action for most probable state), `task3_decisions_scenario_{A,B,C}.png`, `task3_summary.csv` |
+| All scenarios | `all_scenarios_beliefs_and_decisions.csv` (one row per time step for A, B and C: filtered belief, most probable state, EU of each action and recommended action) |
 | Sensitivity | `sensitivity_analysis.csv` (action counts, switches, steps differing from baseline and mean belief for each setting and scenario) |
 
 ### Report figures (`results/report_figures/`)
