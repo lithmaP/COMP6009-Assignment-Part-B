@@ -33,7 +33,7 @@ are used. The model tables (prior, sensor models, transition model and utilities
 │   └── scenario_C_noisy.csv
 ├── results/                # Generated outputs (see below)
 ├── assignment/             # Assignment specification (PDF)
-├── report/                 # Report (DOCX)
+├── report/                 # Report (PDF for submission, DOCX source)
 └── submission/code/        # Code package for submission (has its own README)
 ```
 
