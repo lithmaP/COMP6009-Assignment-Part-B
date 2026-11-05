@@ -32,7 +32,6 @@ are used. The model tables (prior, sensor models, transition model and utilities
 │   ├── scenario_B_deteriorating.csv
 │   └── scenario_C_noisy.csv
 ├── results/                # Generated outputs (see below)
-├── assignment/             # Assignment specification (PDF)
 ├── report/                 # Report (PDF for submission, DOCX source)
 └── submission/             # Exactly what is submitted
     ├── code/               # Code package (has its own README)
