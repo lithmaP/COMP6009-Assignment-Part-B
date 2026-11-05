@@ -34,7 +34,9 @@ are used. The model tables (prior, sensor models, transition model and utilities
 ├── results/                # Generated outputs (see below)
 ├── assignment/             # Assignment specification (PDF)
 ├── report/                 # Report (PDF for submission, DOCX source)
-└── submission/code/        # Code package for submission (has its own README)
+└── submission/             # Exactly what is submitted
+    ├── code/               # Code package (has its own README)
+    └── report/             # Report PDF
 ```
 
 ## Prerequisites
